@@ -5,7 +5,7 @@ Pass {
 	Blend Off
 
 CGPROGRAM
-	#pragma target 3.0
+	#pragma target 3.5
 	#include "UnityCG.cginc"
 	#include "VolumetricFog.cginc"
 	#pragma vertex vert
