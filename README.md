@@ -23,7 +23,7 @@ System requirements
 -------------------
 - Compute shaders. Tested on dx11, dx12 and osx with metal. Might work on other platforms with compute shaders too.
 - Tested in Unity 5.6 to Unity 2017.1.2. Please let me know in case of trouble in a newer version.
-- Compiles with Unity 2017.2
+- Compiles with Unity 2017.2 with #pragma 3.5
 
 Usage notes
 -----------
