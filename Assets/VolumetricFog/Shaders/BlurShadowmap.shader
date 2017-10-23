@@ -180,6 +180,7 @@ Shader "Hidden/BlurShadowmap" {
 	Pass 
 	{ 
 		CGPROGRAM
+		#pragma target 3.5	
 		#pragma vertex vert4Tap
 		#pragma fragment fragDownsampleFromShadowmapFormat
 		ENDCG	 
@@ -189,6 +190,7 @@ Shader "Hidden/BlurShadowmap" {
 	Pass 
 	{ 
 		CGPROGRAM
+		#pragma target 3.5	
 		#pragma vertex vert4Tap
 		#pragma fragment fragDownsample
 		ENDCG	 
@@ -200,7 +202,7 @@ Shader "Hidden/BlurShadowmap" {
 		Cull Off
 		
 		CGPROGRAM 
-		
+		#pragma target 3.5	
 		#pragma vertex vertBlurVertical
 		#pragma fragment fragBlur8
 		
@@ -213,7 +215,7 @@ Shader "Hidden/BlurShadowmap" {
 		Cull Off
 				
 		CGPROGRAM
-		
+		#pragma target 3.5
 		#pragma vertex vertBlurHorizontal
 		#pragma fragment fragBlur8
 		
@@ -224,6 +226,7 @@ Shader "Hidden/BlurShadowmap" {
 	Pass 
 	{ 
 		CGPROGRAM
+		#pragma target 3.5	
 		#pragma vertex vert4TapDir
 		#pragma fragment fragDownsampleFromShadowmapFormatDir
 		ENDCG	 
@@ -233,6 +236,7 @@ Shader "Hidden/BlurShadowmap" {
 	Pass 
 	{ 
 		CGPROGRAM
+		#pragma target 3.5	
 		#pragma vertex vert4TapDir
 		#pragma fragment fragDownsample
 		ENDCG	 
