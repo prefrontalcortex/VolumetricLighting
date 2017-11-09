@@ -67,7 +67,7 @@ Pass
 	ZTest Always
 	
 	CGPROGRAM
-	#pragma target 3.0
+	#pragma target 5.0
 	#pragma vertex vert_deferred
 	#pragma fragment frag
 	#pragma exclude_renderers nomrt
