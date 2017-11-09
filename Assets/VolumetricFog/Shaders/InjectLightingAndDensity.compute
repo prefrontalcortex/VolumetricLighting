@@ -222,8 +222,8 @@ float Density(float3 pos)
 	#ifdef FOG_ELLIPSOIDS
 	FogEllipsoids(pos, fog);
 	#endif
-
-	return max(fog * _Density, 0.0);
+	//Max clamp to 16 bit float, density can be very high if camera frustum is long. https://docs.unity3d.com/Manual/SL-DataTypesAndPrecision.html
+	return clamp(fog * _Density, 0.0, 60000.0);
 }
 
 float3 FrustumRay(float2 uv, float4 frustumRays[4])
