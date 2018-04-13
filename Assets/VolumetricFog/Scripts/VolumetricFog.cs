@@ -187,14 +187,28 @@ public class VolumetricFog : MonoBehaviour
 		m_HeightFogAmount = Mathf.Max(m_HeightFogAmount, 0);
 	}
 
+    ComputeBuffer _dummyBuffer;
+    ComputeBuffer dummyBuffer
+    {
+        get
+        {
+            if (_dummyBuffer == null || !_dummyBuffer.IsValid())
+                _dummyBuffer = new ComputeBuffer(1, sizeof(float));
+            return _dummyBuffer;
+        }
+    }
+
 	void SetUpPointLightBuffers(int kernel)
 	{
 		int count = m_PointLightParamsCB == null ? 0 : m_PointLightParamsCB.count;
 		m_InjectLightingAndDensity.SetFloat("_PointLightsCount", count);
-		if (count == 0)
-			return;
+        if (count == 0)
+        {
+            m_InjectLightingAndDensity.SetBuffer(kernel, "_PointLights", dummyBuffer);
+            return;
+        }
 
-		if (m_PointLightParams == null || m_PointLightParams.Length != count)
+        if (m_PointLightParams == null || m_PointLightParams.Length != count)
 			m_PointLightParams = new PointLightParams[count];
 
 		HashSet<FogLight> fogLights = LightManagerFogLights.Get();
@@ -225,10 +239,13 @@ public class VolumetricFog : MonoBehaviour
 	{
 		int count = m_TubeLightParamsCB == null ? 0 : m_TubeLightParamsCB.count;
 		m_InjectLightingAndDensity.SetFloat("_TubeLightsCount", count);
-		if (count == 0)
-			return;
+        if (count == 0)
+        {
+            m_InjectLightingAndDensity.SetBuffer(kernel, "_TubeLights", dummyBuffer);
+            return;
+        }
 
-		if (m_TubeLightParams == null || m_TubeLightParams.Length != count)
+        if (m_TubeLightParams == null || m_TubeLightParams.Length != count)
 			m_TubeLightParams = new TubeLightParams[count];
 
 		if (m_TubeLightShadowPlaneParams == null || m_TubeLightShadowPlaneParams.Length != count)
@@ -276,10 +293,13 @@ public class VolumetricFog : MonoBehaviour
 	{
 		int count = m_AreaLightParamsCB == null ? 0 : m_AreaLightParamsCB.count;
 		m_InjectLightingAndDensity.SetFloat("_AreaLightsCount", count);
-		if (count == 0)
-			return;
+        if (count == 0)
+        {
+            m_InjectLightingAndDensity.SetBuffer(kernel, "_AreaLights", dummyBuffer);
+            return;
+        }
 
-		if (m_AreaLightParams == null || m_AreaLightParams.Length != count)
+        if (m_AreaLightParams == null || m_AreaLightParams.Length != count)
 			m_AreaLightParams = new AreaLightParams[count];
 
 		HashSet<FogLight> fogLights = LightManagerFogLights.Get();
@@ -318,21 +338,23 @@ public class VolumetricFog : MonoBehaviour
 		m_InjectLightingAndDensity.SetFloat("_ShadowedAreaLightIndex", shadowedAreaLightIndex);
 	}
 
-	void SetUpFogEllipsoidBuffers(int kernel)
-	{
-		int count = 0;
-		HashSet<FogEllipsoid> fogEllipsoids = LightManagerFogEllipsoids.Get();
-		for (var x = fogEllipsoids.GetEnumerator(); x.MoveNext();) {
-			var fe = x.Current;
-			if (fe != null && fe.enabled && fe.gameObject.activeSelf)
-				count++;
-		}
+    void SetUpFogEllipsoidBuffers(int kernel)
+    {
+        int count = 0;
+        HashSet<FogEllipsoid> fogEllipsoids = LightManagerFogEllipsoids.Get();
+        for (var x = fogEllipsoids.GetEnumerator(); x.MoveNext();) {
+            var fe = x.Current;
+            if (fe != null && fe.enabled && fe.gameObject.activeSelf)
+                count++;
+        }
 
-		m_InjectLightingAndDensity.SetFloat("_FogEllipsoidsCount", count);
-		if (count == 0)
-			return;
+        m_InjectLightingAndDensity.SetFloat("_FogEllipsoidsCount", count);
+        if (count == 0) {
+            m_InjectLightingAndDensity.SetBuffer(kernel, "_FogEllipsoids", dummyBuffer);
+            return;
+        }
 
-		if (m_FogEllipsoidParams == null || m_FogEllipsoidParams.Length != count)
+        if (m_FogEllipsoidParams == null || m_FogEllipsoidParams.Length != count)
 			m_FogEllipsoidParams = new FogEllipsoidParams[count];
 
 		int j = 0;
@@ -613,10 +635,12 @@ public class VolumetricFog : MonoBehaviour
 			buffer = null;
 		}
 
-		if (count <= 0)
+		if (count <= 0) { 
+            buffer = null;
 			return;
+        }
 
-		buffer = new ComputeBuffer(count, stride);
+        buffer = new ComputeBuffer(count, stride);
 	}
 
 	void InitResources ()
