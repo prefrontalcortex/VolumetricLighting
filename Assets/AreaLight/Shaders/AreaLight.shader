@@ -18,13 +18,22 @@ sampler2D _CameraGBufferTexture0;
 sampler2D _CameraGBufferTexture1;
 sampler2D _CameraGBufferTexture2;
 
+float4 _MainTex_ST;
+
 void DeferredCalculateLightParams (
 	unity_v2f_deferred i,
 	out float3 outWorldPos,
 	out float2 outUV)
 {
+	float4 corUV = i.uv;
+
+#if UNITY_SINGLE_PASS_STEREO
+	float4 scaleOffset = unity_StereoScaleOffset[unity_StereoEyeIndex];
+	corUV = (screenUV - scaleOffset.zw) / scaleOffset.xy;
+#endif
+
 	i.ray = i.ray * (_ProjectionParams.z / i.ray.z);
-	float2 uv = i.uv.xy / i.uv.w;
+	float2 uv = corUV.xy / corUV.w;
 	
 	// read depth and reconstruct world position
 	float depth = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv);
@@ -40,6 +49,7 @@ half4 CalculateLightDeferred (unity_v2f_deferred i)
 {
 	float3 worldPos;
 	float2 uv;
+
 	DeferredCalculateLightParams (i, worldPos, uv);
 
 	half4 gbuffer0 = tex2D (_CameraGBufferTexture0, uv);

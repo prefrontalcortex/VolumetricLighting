@@ -13,6 +13,7 @@ CGPROGRAM
 
 	sampler2D _CameraDepthTexture;
 	sampler2D _MainTex;
+	float4 _MainTex_ST;
 
 	struct v2f
 	{
@@ -30,16 +31,17 @@ CGPROGRAM
 		#if UNITY_UV_STARTS_AT_TOP
 		if (_ProjectionParams.x < 0)
 			o.uv.y = 1-o.uv.y;
-		#endif				
+		#endif
 		
 		return o;
 	}
 		
 	half4 frag (v2f i) : SV_Target
 	{
-		half linear01Depth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv));
-		half4 fog = Fog(linear01Depth, i.uv);
-		return tex2D(_MainTex, i.uv) * fog.a + fog;
+		float2 uv = UnityStereoScreenSpaceUVAdjust(i.uv, _MainTex_ST);
+		half linear01Depth = Linear01Depth(SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, uv));
+		half4 fog = Fog(linear01Depth, uv);
+		return tex2D(_MainTex, uv) * fog.a + fog;
 	}
 
 ENDCG
