@@ -47,7 +47,7 @@ public partial class AreaLight : MonoBehaviour
 			go.hideFlags = HideFlags.HideAndDontSave;
 			m_ShadowmapCamera.enabled = false;
 			m_ShadowmapCamera.clearFlags = CameraClearFlags.SolidColor;
-			m_ShadowmapCamera.renderingPath = RenderingPath.Forward;
+			m_ShadowmapCamera.renderingPath = RenderingPath.DeferredShading;
 			// exp(EXPONENT) for ESM, white for VSM
 			// m_ShadowmapCamera.backgroundColor = new Color(Mathf.Exp(EXPONENT), 0, 0, 0);
 			m_ShadowmapCamera.backgroundColor = Color.white;
@@ -94,7 +94,7 @@ public partial class AreaLight : MonoBehaviour
 		var oldCulling = GL.invertCulling;
 		GL.invertCulling = false;
 
-		m_ShadowmapCamera.RenderWithShader(m_ShadowmapShader, "RenderType");
+        m_ShadowmapCamera.Render(); //.RenderWithShader(m_ShadowmapShader, "RenderType");
 
 		// Back to whatever was the culling mode.
 		GL.invertCulling = oldCulling;
