@@ -242,6 +242,7 @@ public class VolumetricFog : MonoBehaviour
         if (count == 0)
         {
             m_InjectLightingAndDensity.SetBuffer(kernel, "_TubeLights", dummyBuffer);
+            m_InjectLightingAndDensity.SetBuffer(kernel, "_TubeLightShadowPlanes", dummyBuffer);
             return;
         }
 
