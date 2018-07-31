@@ -450,7 +450,7 @@ float3 AreaLights(float3 pos)
 
 		if (_AreaLights[i].bounded)
 		{
-			att *= saturate(AttenuationToZero(z * z));
+			att *= saturate(AttenuationToZero(z));
 
 			// Magic tweaks to the shape
 			float corner = 0.4;
@@ -467,7 +467,7 @@ float3 AreaLights(float3 pos)
 		float4 lightPos = _AreaLights[i].pos;
 		float3 posToLight = lerp(lightPos.xyz, lightPos.xyz - pos, lightPos.w);
 		float costheta = dot(cameraToPos, normalize(posToLight));
-		att *= anisotropy(costheta);
+		//att *= anisotropy(costheta);
 		#endif
 
 		if (i == shadowedAreaLightIndex && all(abs(p) < 1))
