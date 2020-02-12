@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: 5a3b99ed98424ea4587ec18d930a1d77
-timeCreated: 1444638222
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - m_Sphere: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}

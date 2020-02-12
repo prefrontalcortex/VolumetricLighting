@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: f35c02a2c6230584391703bf32006791
-timeCreated: 1432253353
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - m_DebugShader: {fileID: 4800000, guid: 91e29ad407521e447a7254f5c1ea9b54, type: 3}

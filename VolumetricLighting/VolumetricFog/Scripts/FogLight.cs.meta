@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: 097385f2a510795498370c4d62e61572
-timeCreated: 1463313191
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - m_BlurShadowmapShader: {fileID: 4800000, guid: 701192b62a7678549918bc87434699fe,

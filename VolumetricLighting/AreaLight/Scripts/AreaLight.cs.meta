@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: 792909cacf2415c48a1d7eebef426b5d
-timeCreated: 1453121021
-licenseType: Pro
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
   defaultReferences:
   - m_Cube: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
